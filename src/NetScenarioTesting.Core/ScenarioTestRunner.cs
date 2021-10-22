@@ -45,21 +45,25 @@ namespace NetScenarioTesting.Core
         /// <param name="testInstanceFactory">Factory test instance object by type.</param>
         private static async Task RunAsync(Type testType, TestInstanceFactory testInstanceFactory)
         {
-            var testInstance = testInstanceFactory.Create(testType);
-            var methods = testType.GetMethods().Where(x => x.GetCustomAttribute<ScenarioTestItem>() != null);
-            foreach (var method in methods)
+            try
             {
-                try
+                var classAttribute = testType.GetCustomAttribute<ScenarioTestClass>();
+                Console.WriteLine($"Start test: " + (classAttribute?.Name ?? testType.Name));
+
+                var methods = testType.GetMethods().Where(x => x.GetCustomAttribute<ScenarioTestItem>() != null);
+                foreach (var method in methods)
                 {
+                    Console.WriteLine($"Execute test item: " + (method.GetCustomAttribute<ScenarioTestItem>()?.Description ?? method.Name));
+                    var testInstance = testInstanceFactory.Create(testType);
                     var result = method.Invoke(testInstance, Array.Empty<object>());
                     if (result is Task taskResult)
                         await taskResult;
                 }
-                catch (Exception e)
-                {
-                    // TODO 2021/10/31 griva write to TestLog.
-                    Console.WriteLine(e);
-                }
+            }
+            catch (Exception e)
+            {
+                // TODO 2021/10/31 griva write to TestLog.
+                Console.WriteLine(e);
             }
         }
     }

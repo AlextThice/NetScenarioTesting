@@ -3,7 +3,7 @@ using Xunit;
 
 namespace NetScenarioTesting.Examples
 {
-    [ScenarioTestClass]
+    [ScenarioTestClass(Name = "Testing injection Calculator")]
     public class TestWithInjection
     {
         private readonly Calculator _calculator;
@@ -13,7 +13,7 @@ namespace NetScenarioTesting.Examples
             _calculator = calculator;
         }
         
-        [ScenarioTestItem]
+        [ScenarioTestItem(Description = "Check correct sum two integer value in calculator.")]
         public void Step1()
         {
             Assert.Equal(2, _calculator.Sum(1, 1));
