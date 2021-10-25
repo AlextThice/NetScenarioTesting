@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace NetScenarioTesting.Core
@@ -11,10 +13,18 @@ namespace NetScenarioTesting.Core
         /// <summary>
         /// Build service provider with implemented configuration.
         /// </summary>
+        /// <param name="assemblyName">Assembly name.</param>
         /// <returns>Service provider.</returns>
-        public IServiceProvider Build()
+        public IServiceProvider Build(string assemblyName)
         {
             var serviceCollection = new ServiceCollection();
+            var configurationBuilder = new ConfigurationBuilder()
+                                .SetBasePath(Directory.GetParent(AppContext.BaseDirectory).FullName)
+                                .AddJsonFile("appsettings.json", false);
+            configurationBuilder.AddJsonFile($"appsettings.{assemblyName}.json", true);
+
+            var configuration = (IConfiguration)configurationBuilder.Build();
+            serviceCollection.AddSingleton(configuration);
             ConfigureServices(serviceCollection);
 
             return serviceCollection.BuildServiceProvider();

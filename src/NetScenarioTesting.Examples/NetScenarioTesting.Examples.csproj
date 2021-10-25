@@ -8,4 +8,10 @@
       <ProjectReference Include="..\NetScenarioTesting.Core\NetScenarioTesting.Core.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="appsettings.NetScenarioTesting.Examples.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>

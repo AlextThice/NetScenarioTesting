@@ -76,12 +76,20 @@ namespace NetScenarioTesting.Core.Clients
         /// <returns>Request result as Json.</returns>
         public virtual async Task<JContainer> SendAndReadAsync()
         {
-            var response = await _httpClient.SendAsync(_request);
-            if (!response.IsSuccessStatusCode)
-                throw new HttpRequestException("", null, response.StatusCode);
+            try
+            {
+                var response = await _httpClient.SendAsync(_request);
+                if (!response.IsSuccessStatusCode)
+                    throw new HttpRequestException("", null, response.StatusCode);
             
-            var stringResult = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<JContainer>(stringResult);
+                var stringResult = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<JContainer>(stringResult);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
 
         /// <summary>

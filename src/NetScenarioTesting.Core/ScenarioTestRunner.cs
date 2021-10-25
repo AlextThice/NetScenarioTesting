@@ -50,11 +50,11 @@ namespace NetScenarioTesting.Core
                 var classAttribute = testType.GetCustomAttribute<ScenarioTestClass>();
                 Console.WriteLine($"Start test: " + (classAttribute?.Name ?? testType.Name));
 
+                var testInstance = testInstanceFactory.Create(testType);
                 var methods = testType.GetMethods().Where(x => x.GetCustomAttribute<ScenarioTestItem>() != null);
                 foreach (var method in methods)
                 {
                     Console.WriteLine($"Execute test item: " + (method.GetCustomAttribute<ScenarioTestItem>()?.Description ?? method.Name));
-                    var testInstance = testInstanceFactory.Create(testType);
                     var result = method.Invoke(testInstance, Array.Empty<object>());
                     if (result is Task taskResult)
                         await taskResult;

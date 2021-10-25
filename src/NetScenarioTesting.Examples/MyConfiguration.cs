@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using NetScenarioTesting.Core;
+using NetScenarioTesting.Examples.Clients;
 
 namespace NetScenarioTesting.Examples
 {
@@ -12,6 +13,7 @@ namespace NetScenarioTesting.Examples
         protected override void ConfigureServices(IServiceCollection serviceCollection)
         {
             serviceCollection.AddScoped<Calculator>();
+            serviceCollection.AddScoped<CardsTestJsonClient>();
         }
     }
 }
