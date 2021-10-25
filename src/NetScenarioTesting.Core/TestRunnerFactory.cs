@@ -82,7 +82,7 @@ namespace NetScenarioTesting.Core
                                         ?? typeof(SimpleScenarioTestsConfiguration);
                 var testsConfiguration = (ScenarioTestsConfiguration)Activator.CreateInstance(configurationType);
                 var testInstanceFactory = new TestInstanceFactory(testsConfiguration?.Build(assembly.GetName().Name));
-                return new TestsRunnerData(testTypes, testInstanceFactory);
+                return new TestsRunnerData(testTypes, testInstanceFactory, assembly);
             }
             catch
             {

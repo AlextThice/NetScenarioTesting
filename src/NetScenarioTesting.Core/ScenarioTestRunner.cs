@@ -32,6 +32,24 @@ namespace NetScenarioTesting.Core
                 await RunAsync(testsRunnerData);
         }
 
+        /// <summary>
+        /// Tests in runner.
+        /// </summary>
+        public IReadOnlyCollection<NetScenarioTest> GetTests()
+        {
+            var result = new List<NetScenarioTest>();
+            foreach (var testData in _testsRunnerData)
+            {
+                foreach (var test in testData.TestTypes)
+                {
+                    var testInfo = new NetScenarioTest(testData.Assembly, test);
+                    result.Add(testInfo);
+                }
+            }
+
+            return result;
+        }
+
         private static async Task RunAsync(TestsRunnerData testsRunnerData)
         {
             foreach (var testInstance in testsRunnerData.TestTypes) 

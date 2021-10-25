@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace NetScenarioTesting.Core
 {
@@ -11,5 +12,10 @@ namespace NetScenarioTesting.Core
         /// Run tests.
         /// </summary>
         public Task RunAsync();
+
+        /// <summary>
+        /// Tests in runner.
+        /// </summary>
+        IReadOnlyCollection<NetScenarioTest> GetTests();
     }
 }

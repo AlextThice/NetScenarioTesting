@@ -1,5 +1,4 @@
-﻿using System;
-using NetScenarioTesting.Core;
+﻿using NetScenarioTesting.Core;
 
 namespace NetScenarioTesting.Runner
 {
